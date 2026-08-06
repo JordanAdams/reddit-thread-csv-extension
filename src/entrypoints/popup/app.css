@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+
+body {
+    width: max-content;
+    max-width: 30em;
+}
