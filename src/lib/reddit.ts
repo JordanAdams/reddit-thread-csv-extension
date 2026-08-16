@@ -1,10 +1,4 @@
-import {
-  arrayChunk,
-  forEachAsync,
-  mapAsync,
-  RateLimiter,
-  reduceAsync,
-} from "./utils";
+import { forEachAsync, RateLimiter, decodeHTMLEntities } from "./utils";
 
 interface ThreadResponseElement<K extends string, T> {
   kind: K;
@@ -46,6 +40,7 @@ type ThreadResponseComment = ThreadResponseElement<
     created_utc: number;
     ups: number;
     downs: number;
+    depth: number;
     replies: "" | ThreadResponseCommentListing;
   }
 >;
@@ -70,14 +65,16 @@ interface Post {
   downvotes: number;
 }
 
-interface Comment {
+export interface Comment {
   id: string;
-  parentID: string;
+  parentID?: string;
   authorName: string;
   authorID: string;
   body: string;
   upvotes: number;
   downvotes: number;
+  depth: number;
+  createdAt: Date;
 }
 
 interface MoreChildrenResponse {
@@ -205,12 +202,14 @@ class ThreadResponse {
 
     this.comments[data.id] = {
       id: data.id,
-      parentID: data.parent_id,
+      parentID: data.parent_id != this.post.id ? data.parent_id : undefined,
       authorName: data.author,
       authorID: data.author_fullname,
-      body: data.body,
+      body: decodeHTMLEntities(data.body),
       upvotes: data.ups,
       downvotes: data.downs,
+      depth: data.depth,
+      createdAt: new Date(data.created_utc * 1000),
     };
 
     this.breadcrumb.pop();
@@ -252,6 +251,6 @@ class ThreadResponse {
   }
 
   getComments(): typeof this.comments {
-    return this.comments;
+    return { ...this.comments };
   }
 }

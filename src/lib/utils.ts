@@ -103,3 +103,9 @@ export class RateLimiter {
     }, timeout);
   }
 }
+
+export const decodeHTMLEntities = (str: string): string => {
+  var textArea = document.createElement("textarea");
+  textArea.innerHTML = str;
+  return textArea.value;
+};

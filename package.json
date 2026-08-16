@@ -1,8 +1,8 @@
 {
-  "name": "wxt-svelte-starter",
-  "description": "manifest.json description",
+  "name": "reddit-csv-exporter",
+  "description": "Reddit CSV Exporter",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "wxt",
@@ -26,6 +26,7 @@
   "dependencies": {
     "@lucide/svelte": "^1.25.0",
     "@tailwindcss/vite": "^4.3.3",
+    "csv-stringify": "^6.8.3",
     "tailwindcss": "^4.3.3"
   }
 }
