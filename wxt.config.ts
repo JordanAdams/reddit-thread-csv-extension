@@ -6,6 +6,7 @@ export default defineConfig({
   srcDir: "src",
   modules: ["@wxt-dev/module-svelte"],
   manifest: {
+    host_permissions: ["*://*.reddit.com/*"],
     permissions: ["downloads"],
   },
   svelte: {
