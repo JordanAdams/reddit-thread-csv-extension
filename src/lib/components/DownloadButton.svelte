@@ -63,7 +63,7 @@
         ],
         ...Object.values(comments).map((item) => [
           item.id,
-          item.parentID.replace(/^t\d_/, ""),
+          item.parentID?.replace(/^t\d_/, "") || "",
           `${item.createdAt.getDate()}-${item.createdAt.getMonth() + 1}-${item.createdAt.getFullYear()}`,
           item.authorName,
           item.body,
